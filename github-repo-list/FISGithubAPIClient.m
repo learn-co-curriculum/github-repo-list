@@ -15,15 +15,22 @@ NSString *const GITHUB_API_URL=@"https://api.github.com";
 
 +(void)getRepositoriesWithCompletion:(void (^)(NSArray *))completionBlock
 {
-    NSString *githubURL = [NSString stringWithFormat:@"%@/repositories?client_id=%@&client_secret=%@",GITHUB_API_URL,GITHUB_CLIENT_ID,GITHUB_CLIENT_SECRET];
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-
-    [manager GET:githubURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        completionBlock(responseObject);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"Fail: %@",error.localizedDescription);
+    // create a string to turn into a URL
+    NSString *urlString = [NSString stringWithFormat:@"%@/repositories?client_id=%@&client_secret=%@",GITHUB_API_URL,GITHUB_CLIENT_ID,GITHUB_CLIENT_SECRET];
+    NSURL *thisURL = [NSURL URLWithString:urlString];
+    
+    // create a session
+    NSURLSession *thisSession = [NSURLSession sharedSession];
+    
+    // create NSURLSessionDataTask using thisSession
+    NSURLSessionDataTask *thisTask = [thisSession dataTaskWithURL:thisURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        NSArray *responseArrayOfDictionaries = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
+        completionBlock(responseArrayOfDictionaries);
     }];
+    
+    [thisTask resume];
 }
 
 @end
