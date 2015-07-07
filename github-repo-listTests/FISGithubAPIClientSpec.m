@@ -43,13 +43,15 @@ describe(@"FISGithubAPIClient", ^{
             expect([FISGithubAPIClient class]).to.respondTo(@selector(getRepositoriesWithCompletion:));
         });
 
-        it(@"Should get repositories", ^AsyncBlock{
-            [FISGithubAPIClient getRepositoriesWithCompletion:^(NSArray *repoDictionaries) {
-                expect(repoDictionaries).toNot.beNil();
-                expect(repoDictionaries.count).to.equal(2);
-                expect(repoDictionaries).to.equal(repositoryArray);
-                done();
-            }];
+        it(@"Should get repositories", ^{
+            waitUntil(^(DoneCallback done) {
+                [FISGithubAPIClient getRepositoriesWithCompletion:^(NSArray *repoDictionaries) {
+                    expect(repoDictionaries).toNot.beNil();
+                    expect(repoDictionaries.count).to.equal(2);
+                    expect(repoDictionaries).to.equal(repositoryArray);
+                    done();
+                }];
+            });
         });
     });
 });

@@ -54,32 +54,35 @@ describe(@"FISReposDataStore", ^{
 
     describe(@"getRepositories Method", ^{
 
-        it(@"Should set success to YES if everything works", ^AsyncBlock{
-            FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
-            [dataStore getRepositoriesWithCompletion:^(BOOL success) {
-                expect(success).to.beTruthy;
-                done();
-            }];
+        it(@"Should set success to YES if everything works", ^{
+            waitUntil(^(DoneCallback done) {
+                FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
+                [dataStore getRepositoriesWithCompletion:^(BOOL success) {
+                    expect(success).to.beTruthy;
+                    done();
+                }];
+            });
         });
 
-        it(@"Should Get The Correct Repositories", ^AsyncBlock{
-
-            FISGithubRepository *repo1 = [[FISGithubRepository alloc] init];
-            repo1.repositoryID=@"1";
-            repo1.fullName=@"mojombo/grit";
-            repo1.htmlURL=[NSURL URLWithString:@"https://github.com/mojombo/grit"];
-            FISGithubRepository *repo2 = [[FISGithubRepository alloc] init];
-            repo2.repositoryID = @"26";
-            repo2.fullName = @"wycats/merb-core";
-            repo2.htmlURL=[NSURL URLWithString:@"https://github.com/wycats/merb-core"];
-            NSArray *correctRepos = [[NSMutableArray alloc] initWithArray:@[repo1,repo2]];
-            FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
-
-            [dataStore getRepositoriesWithCompletion:^(BOOL success) {
-                expect([dataStore.repositories count]).to.equal(2);
-                expect(dataStore.repositories).to.equal(correctRepos);
-                done();
-            }];
+        it(@"Should Get The Correct Repositories", ^{
+            waitUntil(^(DoneCallback done) {
+                FISGithubRepository *repo1 = [[FISGithubRepository alloc] init];
+                repo1.repositoryID=@"1";
+                repo1.fullName=@"mojombo/grit";
+                repo1.htmlURL=[NSURL URLWithString:@"https://github.com/mojombo/grit"];
+                FISGithubRepository *repo2 = [[FISGithubRepository alloc] init];
+                repo2.repositoryID = @"26";
+                repo2.fullName = @"wycats/merb-core";
+                repo2.htmlURL=[NSURL URLWithString:@"https://github.com/wycats/merb-core"];
+                NSArray *correctRepos = [[NSMutableArray alloc] initWithArray:@[repo1,repo2]];
+                FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
+                
+                [dataStore getRepositoriesWithCompletion:^(BOOL success) {
+                    expect([dataStore.repositories count]).to.equal(2);
+                    expect(dataStore.repositories).to.equal(correctRepos);
+                    done();
+                }];
+            });
         });
     });
 
