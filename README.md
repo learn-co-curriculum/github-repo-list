@@ -11,6 +11,9 @@ In this lab your goal is to write a github repository browser. To do this we are
 
 The API is actually pretty simple. First you need to get a client_id and client_secret, but you can probably use mine and it'll be fine (ask an instructor for the key/secret). To get a list of all repositories just do the following request:
 
+```
+GET https://api.github.com/repositories?client_id=YOUR_KEY&client_secret=YOUR_SECRET
+```
 
 You'll get a response like this using a client_id and client_secret:
 
