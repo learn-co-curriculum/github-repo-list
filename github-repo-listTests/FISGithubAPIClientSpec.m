@@ -10,7 +10,8 @@
 #define EXP_SHORTHAND
 #import <Expecta.h>
 #import "FISGithubAPIClient.h"
-#import <OHHTTPStubs.h>
+#import <OHHTTPStubs/OHHTTPStubs.h>
+#import <OHHTTPStubs/OHPathHelpers.h>
 
 
 SpecBegin(FISGithubAPIClient)
@@ -29,10 +30,10 @@ describe(@"FISGithubAPIClient", ^{
                 return NO;
             }
         } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
-            return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(@"repositories.json", nil) statusCode:200 headers:@{@"Content-Type": @"application/json"}];
+            return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(@"repositories.json", [NSBundle mainBundle]) statusCode:200 headers:@{@"Content-Type": @"application/json"}];
         }];
         
-        NSData *data = [NSData dataWithContentsOfFile:OHPathForFileInBundle(@"repositories.json", nil)];
+        NSData *data = [NSData dataWithContentsOfFile:OHPathForFileInBundle(@"repositories.json", [NSBundle mainBundle])];
         repositoryArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     });
     

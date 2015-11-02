@@ -22,8 +22,7 @@
 		E270C69D1B4C56FC00F5AA12 /* repositories.json in Resources */ = {isa = PBXBuildFile; fileRef = 313A2C521A081CDF00F1073A /* repositories.json */; };
 		E270C69E1B4C570100F5AA12 /* FISReposDataStoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 313A2C431A08163500F1073A /* FISReposDataStoreSpec.m */; };
 		E270C69F1B4C570100F5AA12 /* FISReposTableViewControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 313A2C441A08163500F1073A /* FISReposTableViewControllerSpec.m */; };
-		E270C6A21B4C583200F5AA12 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E270C6A11B4C583200F5AA12 /* Info.plist */; };
-		E270C6A51B4C6BDE00F5AA12 /* FISConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E270C6A41B4C6BDE00F5AA12 /* FISConstants.m */; };
+		E271A4441BE7F52900180BC8 /* FISConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E271A4431BE7F52900180BC8 /* FISConstants.m */; settings = {ASSET_TAGS = (); }; };
 		E2F307191B4B063200430A97 /* FISGithubAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F307181B4B063200430A97 /* FISGithubAPIClient.m */; };
 		E2F3071C1B4B063C00430A97 /* FISReposDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3071B1B4B063C00430A97 /* FISReposDataStore.m */; };
 /* End PBXBuildFile section */
@@ -65,8 +64,8 @@
 		C086FD10914BBE0F46951B02 /* Pods-github-repo-listTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-github-repo-listTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-github-repo-listTests/Pods-github-repo-listTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E270C68F1B4C56CF00F5AA12 /* github-repo-listTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "github-repo-listTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E270C6A11B4C583200F5AA12 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E270C6A31B4C6BDE00F5AA12 /* FISConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISConstants.h; sourceTree = "<group>"; };
-		E270C6A41B4C6BDE00F5AA12 /* FISConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISConstants.m; sourceTree = "<group>"; };
+		E271A4421BE7F52900180BC8 /* FISConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISConstants.h; sourceTree = "<group>"; };
+		E271A4431BE7F52900180BC8 /* FISConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISConstants.m; sourceTree = "<group>"; };
 		E2F307171B4B063200430A97 /* FISGithubAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISGithubAPIClient.h; sourceTree = "<group>"; };
 		E2F307181B4B063200430A97 /* FISGithubAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISGithubAPIClient.m; sourceTree = "<group>"; };
 		E2F3071A1B4B063C00430A97 /* FISReposDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISReposDataStore.h; sourceTree = "<group>"; };
@@ -116,10 +115,10 @@
 		313A2C121A08157300F1073A /* github-repo-list */ = {
 			isa = PBXGroup;
 			children = (
+				E271A4421BE7F52900180BC8 /* FISConstants.h */,
+				E271A4431BE7F52900180BC8 /* FISConstants.m */,
 				313A2C171A08157300F1073A /* AppDelegate.h */,
 				313A2C181A08157300F1073A /* AppDelegate.m */,
-				E270C6A31B4C6BDE00F5AA12 /* FISConstants.h */,
-				E270C6A41B4C6BDE00F5AA12 /* FISConstants.m */,
 				313A2C391A0815B500F1073A /* FISReposTableViewController.h */,
 				313A2C3A1A0815B500F1073A /* FISReposTableViewController.m */,
 				313A2C3B1A0815B500F1073A /* FISGithubRepository.h */,
@@ -199,6 +198,7 @@
 				313A2C0D1A08157300F1073A /* Frameworks */,
 				313A2C0E1A08157300F1073A /* Resources */,
 				0EAA7907DC991F3B272FEE96 /* Copy Pods Resources */,
+				14B96D55AB91066487E63748 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,6 +218,7 @@
 				E270C68C1B4C56CF00F5AA12 /* Frameworks */,
 				E270C68D1B4C56CF00F5AA12 /* Resources */,
 				B1BF190BC5C2630792AD10C5 /* Copy Pods Resources */,
+				D51C128C5D40E24F2C34925F /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -235,7 +236,7 @@
 		313A2C081A08157300F1073A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Zachary Drossman";
 				TargetAttributes = {
 					313A2C0F1A08157300F1073A = {
@@ -282,7 +283,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E270C6A21B4C583200F5AA12 /* Info.plist in Resources */,
 				E270C69D1B4C56FC00F5AA12 /* repositories.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +303,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-github-repo-list/Pods-github-repo-list-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		14B96D55AB91066487E63748 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-github-repo-list/Pods-github-repo-list-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B1BF190BC5C2630792AD10C5 /* Copy Pods Resources */ = {
@@ -335,6 +350,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		D51C128C5D40E24F2C34925F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-github-repo-listTests/Pods-github-repo-listTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E3020F4244506F6DA0460F95 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -358,7 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				313A2C191A08157300F1073A /* AppDelegate.m in Sources */,
-				E270C6A51B4C6BDE00F5AA12 /* FISConstants.m in Sources */,
+				E271A4441BE7F52900180BC8 /* FISConstants.m in Sources */,
 				313A2C3D1A0815B500F1073A /* FISReposTableViewController.m in Sources */,
 				313A2C3E1A0815B500F1073A /* FISGithubRepository.m in Sources */,
 				E2F307191B4B063200430A97 /* FISGithubAPIClient.m in Sources */,
@@ -428,6 +458,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -490,7 +521,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "github-repo-list/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -501,7 +534,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "github-repo-list/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -524,6 +559,7 @@
 				INFOPLIST_FILE = "github-repo-listTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/github-repo-list.app/github-repo-list";
 			};
@@ -544,6 +580,7 @@
 				INFOPLIST_FILE = "github-repo-listTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/github-repo-list.app/github-repo-list";
 			};

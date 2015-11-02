@@ -30,8 +30,8 @@ describe(@"FISReposTableViewController", ^{
             expect([tableView numberOfSections]).to.equal(1);
         });
         
-        it(@"Should have two cells", ^{
-            expect([tableView numberOfRowsInSection:0]).to.equal(2);
+        it(@"Should have one hundred cells", ^{
+            expect([tableView numberOfRowsInSection:0]).to.equal(100);
         });
     });
 
@@ -42,6 +42,7 @@ describe(@"FISReposTableViewController", ^{
         
         it(@"Should have the correct cells", ^{
             expect(secondCell.textLabel.text).to.equal(@"wycats/merb-core");
+
         });
     });
     
