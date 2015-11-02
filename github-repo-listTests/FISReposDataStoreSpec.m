@@ -11,6 +11,7 @@
 #define EXP_SHORTHAND
 #import <Expecta.h>
 #import <OHHTTPStubs.h>
+#import <OHHTTPStubs/OHPathHelpers.h>
 #import "FISGithubRepository.h"
 
 
@@ -29,7 +30,7 @@ describe(@"FISReposDataStore", ^{
                 return NO;
             }
         } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
-            return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(@"repositories.json", nil) statusCode:200 headers:@{@"Content-Type": @"application/json"}];
+            return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(@"repositories.json", [NSBundle mainBundle]) statusCode:200 headers:@{@"Content-Type": @"application/json"}];
         }];
     });
 
