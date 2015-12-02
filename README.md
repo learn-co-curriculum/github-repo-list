@@ -163,3 +163,5 @@ As you can see we have quite a lot of data on each repo.
   3. Create a new method in `FISGithubRepository` that will take the `NSDictionary` representation of the repository and returns a new instance of `FISGithubRepository` all filled out.
   4. Add a method to `FISGithubDataStore` that uses `FISGithubAPIClient` to fill the `repositories` property with `FISGithubRepository` objects. In the completionBlock just pass back a `BOOL` success variable.
   5. In your `FISReposTableViewController` on `viewDidLoad` retreive the repos from the `FISGithubDataStore` and display them!
+
+<a href='https://learn.co/lessons/github-repo-list' data-visibility='hidden'>View this lesson on Learn.co</a>
