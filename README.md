@@ -164,4 +164,4 @@ As you can see we have quite a lot of data on each repo.
   4. Add a method to `FISGithubDataStore` that uses `FISGithubAPIClient` to fill the `repositories` property with `FISGithubRepository` objects. In the completionBlock just pass back a `BOOL` success variable.
   5. In your `FISReposTableViewController` on `viewDidLoad` retreive the repos from the `FISGithubDataStore` and display them!
 
-<a href='https://learn.co/lessons/github-repo-list' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/github-repo-list' title='Github Repo List'>Github Repo List</a> on Learn.co and start learning to code for free.</p>
