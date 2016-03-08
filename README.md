@@ -159,9 +159,9 @@ As you can see we have quite a lot of data on each repo.
   (NSString *)repositoryID
   ```
 
-  2. In the `FISGithubAPIClient` create a method that retreives a list of all of the repositories, and passes the `NSArray` of `NSDictionaries` to a completionBlock. **Do this with `NSURLSession`**, not AFNetworking.
-  3. Create a new method in `FISGithubRepository` that will take the `NSDictionary` representation of the repository and returns a new instance of `FISGithubRepository` all filled out.
-  4. Add a method to `FISGithubDataStore` that uses `FISGithubAPIClient` to fill the `repositories` property with `FISGithubRepository` objects. In the completionBlock just pass back a `BOOL` success variable.
-  5. In your `FISReposTableViewController` on `viewDidLoad` retreive the repos from the `FISGithubDataStore` and display them!
+  2. In the `FISGithubAPIClient` create a method called `getRepositoriesWithCompletion:` that retreives a list of all of the repositories, and passes the `NSArray` of `NSDictionaries` to a completionBlock. **Do this with `NSURLSession`**, not AFNetworking.
+  3. Create a new method in `FISGithubRepository` called `repoFromDictionary:` that will take the `NSDictionary` representation of the repository and returns a new instance of `FISGithubRepository` all filled out.
+  4. Add a method to `FISReposDataStore` called `getRepositoriesWithCompletion:` that uses `FISGithubAPIClient` to fill the `repositories` property with `FISGithubRepository` objects. In the completionBlock just pass back a `BOOL` success variable.
+  5. In the `viewDidLoad` of your `FISReposTableViewController`, retreive the repos from the `FISGithubDataStore` and display them!
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/github-repo-list' title='Github Repo List'>Github Repo List</a> on Learn.co and start learning to code for free.</p>
