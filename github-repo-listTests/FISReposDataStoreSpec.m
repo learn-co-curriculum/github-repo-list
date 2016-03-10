@@ -21,29 +21,13 @@ describe(@"FISReposDataStore", ^{
     
     beforeAll(^{
         [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-            if ([request.URL.host isEqualToString:@"api.github.com"]&&[request.URL.path isEqualToString:@"/repositories"])
-            {
-                return YES;
-            }
-            else
-            {
-                return NO;
-            }
+            return [request.URL.host isEqualToString:@"api.github.com"] && [request.URL.path isEqualToString:@"/repositories"];
         } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
             return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(@"repositories.json", [NSBundle mainBundle]) statusCode:200 headers:@{@"Content-Type": @"application/json"}];
         }];
     });
 
-    beforeEach(^{
-
-    });
-
-    it(@"Should alloc the repositories array", ^{
-        FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
-        expect(dataStore.repositories).toNot.beNil();
-    });
-
-    describe(@"Shared singleton method", ^{
+    describe(@"sharedDataStore", ^{
         it(@"Should have a sharedDataStore class method", ^{
             expect([FISReposDataStore class]).to.respondTo(@selector(sharedDataStore));
         });
@@ -54,46 +38,29 @@ describe(@"FISReposDataStore", ^{
     });
 
     describe(@"getRepositories Method", ^{
-
-        it(@"Should set success to YES if everything works", ^{
-            waitUntil(^(DoneCallback done) {
-                FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
-                [dataStore getRepositoriesWithCompletion:^(BOOL success) {
-                    expect(success).to.beTruthy;
-                    done();
-                }];
-            });
-        });
-
         it(@"Should Get The Correct Repositories", ^{
             waitUntil(^(DoneCallback done) {
-                FISGithubRepository *repo1 = [[FISGithubRepository alloc] init];
-                repo1.repositoryID=@"1";
-                repo1.fullName=@"mojombo/grit";
-                repo1.htmlURL=[NSURL URLWithString:@"https://github.com/mojombo/grit"];
-                FISGithubRepository *repo2 = [[FISGithubRepository alloc] init];
-                repo2.repositoryID = @"26";
-                repo2.fullName = @"wycats/merb-core";
-                repo2.htmlURL=[NSURL URLWithString:@"https://github.com/wycats/merb-core"];
-                NSArray *correctRepos = [[NSMutableArray alloc] initWithArray:@[repo1,repo2]];
                 FISReposDataStore *dataStore = [[FISReposDataStore alloc] init];
                 
-                [dataStore getRepositoriesWithCompletion:^(BOOL success) {
+                [dataStore getRepositoriesWithCompletion:^{
                     expect([dataStore.repositories count]).to.equal(2);
-                    expect(dataStore.repositories).to.equal(correctRepos);
+
+                    FISGithubRepository *repo1 = dataStore.repositories[0];
+                    expect(repo1.repositoryID).to.equal(@"1");
+                    expect(repo1.fullName).to.equal(@"mojombo/grit");
+                    expect(repo1.htmlURL).to.equal([NSURL URLWithString:@"https://github.com/mojombo/grit"]);
+
+                    FISGithubRepository *repo2 = dataStore.repositories[1];
+                    expect(repo2.repositoryID).to.equal(@"26");
+                    expect(repo2.fullName).to.equal(@"wycats/merb-core");
+                    expect(repo2.htmlURL).to.equal([NSURL URLWithString:@"https://github.com/wycats/merb-core"]);
+
                     done();
                 }];
             });
         });
     });
-
-    afterEach(^{
-
-    });
     
-    afterAll(^{
-
-    });
 });
 
 SpecEnd

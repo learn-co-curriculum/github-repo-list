@@ -1,20 +1,22 @@
-
-
 # Github Repo List
 
-In this lab your goal is to write a github repository browser. To do this we are going to need to talk to the github repo API, parse the results and then display them in a `UITableView`.
+In this lab your goal is to write a Github repository browser. To do this we are going to need to talk to the [Github repo API](https://developer.github.com/v3/repos/#list-all-public-repositories), parse the results, and then display the repo names in a `UITableView`.
 
 ## The API
 
-The API is actually pretty simple. First you need to get a client_id and client_secret, but you can probably use mine and it'll be fine (ask an instructor for the key/secret). To get a list of all repositories just do the following request:
+The API for this particular task is actually pretty straightforward.
+
+First you need to get a client id and client secret, by creating an app in your Github preferences. That may sound intimidating, but ultimately it's just a bit of bookkeeping. You can make one of those [here](https://github.com/settings/applications/new). Don't worry about the details too much -- it's just a formality. Once you do that, you'll have a client ID and secret when you can use in the URL for API requests. You can read the details on specifying those keys in Github's general API documentation [here](https://developer.github.com/v3/versions/).
+
+With your client ID and secret in hand, you can construct the URL for the list of all repositories:
 
 ```
-GET https://api.github.com/repositories?client_id=YOUR_KEY&client_secret=YOUR_SECRET
+https://api.github.com/repositories?client_id=YOUR_KEY&client_secret=YOUR_SECRET
 ```
 
-You'll get a response like this using a client_id and client_secret:
+`GET`ting that URL will give you a response like this:
 
-```
+```json
 [
   {
     "id": 1,
@@ -143,25 +145,61 @@ You'll get a response like this using a client_id and client_secret:
     "notifications_url": "https://api.github.com/repos/wycats/merb-core/notifications{?since,all,participating}",
     "labels_url": "https://api.github.com/repos/wycats/merb-core/labels{/name}",
     "releases_url": "https://api.github.com/repos/wycats/merb-core/releases{/id}"
-  }
+  },
+  ...
 ]
 ```
 
-As you can see we have quite a lot of data on each repo. 
+As you can see we have quite a lot of data on each repo. Take note of the structure of the data: it's an array of dictionaries, with each dictionary representing a single repository.
+
+Before you get started, play around with the URL in the view controller. Try fetching it using `NSURLSession` and friends. Once you have the data coming back from Github's server, follow the instructions below to complete the application.
 
 ## Instructions
 
-  1. Finish the `FISGithubRepository` object. It should have the following properties and an `isEqual` method that compares the two `FISGithubRepository` objects.
+There are a billion approaches to organizing programs that talk to an API. The approach we recommend involves a few tiers: the **API client**, the **data store**, and the **models**.
 
-  ```
-  (NSString *)fullName // eg- 'githubUser/nameOfRepo'
-  (NSURL *)htmlURL
-  (NSString *)repositoryID
-  ```
+The idea at a high level is this:
 
-  2. In the `FISGithubAPIClient` create a method called `getRepositoriesWithCompletion:` that retreives a list of all of the repositories, and passes the `NSArray` of `NSDictionaries` to a completionBlock. **Do this with `NSURLSession`**, not AFNetworking.
-  3. Create a new method in `FISGithubRepository` called `repoFromDictionary:` that will take the `NSDictionary` representation of the repository and returns a new instance of `FISGithubRepository` all filled out.
-  4. Add a method to `FISReposDataStore` called `getRepositoriesWithCompletion:` that uses `FISGithubAPIClient` to fill the `repositories` property with `FISGithubRepository` objects. In the completionBlock just pass back a `BOOL` success variable.
-  5. In the `viewDidLoad` of your `FISReposTableViewController`, retreive the repos from the `FISGithubDataStore` and display them!
+- The API client is a relatively simplistic class whose sole job is to wrap up the nitty gritty of talking to an AI (building the URL, deserializing the JSON, and so on). It usually consists entirely of class methods, each of which executes one API request and calls back its block with the response.
+- The data store class is similar the the ones we've been building (with a singleton instance). It has methods that call methods on the API client, and uses the results to populate properties on itself.
+- The models are custom classes that are used to encapsulate the data we get from the API. Rather than dealing with the raw dictionaries and arrays from the API's JSON responses, we convert that data into instances of the model classes.
+
+### The API Client
+
+  1. In the `FISGithubAPIClient` class, create a **class method** called `getRepositoriesWithCompletion:`. The job of this method is to fetch all the repositories from the Github API, and pass that array of dictionaries on to its completion block.
+      - This method should know the URL to hit for the API request, create the `NSURLSessionDataTask`, and kick it off.
+      - In the completion block for the data task, the method should deserialize the JSON data from the server.
+      - But how does this method get those objects back to the person who called it? It should take *its own* block, which is fed the array of dictionaries. Check out [goshdarnblocksyntax.com](http://goshdarnblocksyntax.com) for the exact syntax, but the block should return nothing and take one argument, an array of dictionaries.
+
+### The Model
+
+Even though the raw data from the API is in the form of arrays and dictionaries, let's massage that data into actual classes for ease of use.
+
+  1. Add some properties to the `FISGithubRepository` object. We will be massaging the dictionaries from the API into instances of this class. It should have at least the following properties, which will come directly from the dictionaries in the API response.
+    - `fullName`, an `NSString` of the full name of the repository (e.g., "githubUser/nameOfRepo")
+    - `htmlURL`, an `NSURL` of the page for the repository on Github's website
+    - `repositoryID`, an `NSString` of the ID of the repository.
+  2. Now we need some way to turn our dictionaries into instances of `FISGithubRepository`. Let's do this by giving the class a custom initializer, `initWithDictionary:`, that will take in a dictionary from the API and assign the properties based on the values in that dictionary. Look through Github's docs and the sample response to find the relevant dictionary keys.
+
+### The Data Store
+
+The data store's job is to use the methods on the API client, but take it one step further. It should turn the dictionaries from the API client's callback and turn them into actual instances of `FISGithubRepository`.
+
+  1. Add a method to `FISReposDataStore` called `getRepositoriesWithCompletion:` that uses the method of the same name on `FISGithubAPIClient`.
+    - The completion block to the API client method should use the `initWithDictionary:` method on `FISGithubRepository` to turn the dictionaries into real objects.
+    - That array of repository objects should be assigned to the `repositories` property on the data store.
+    - Now we're in the same boat as in the API client, where we have some result that we got asynchronously and need to inform our caller that we're done. This means the `getRepositoriesWithCompletion:` needs **its** own completion block. Just make this one take no arguments and return nothing (so its type will be `void (^)(void)`).
+
+### All together now...
+
+  1. In the `viewDidLoad` of your `FISReposTableViewController`, retreive the repos using the method on the `FISGithubDataStore` and display them in the table view!
+    - Due to the way the UI interacts with threading in iOS, you may see nothing on screen until you try to scroll in the tableview. Ruh roh! We'll talk about threading in more detail soon, but in order to interact with the UI from within an `NSURLSession` completion block, we need to hop back to the main thread. You can do this like so:
+    
+    ```objc
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        // your code that touches the UI here, like, maybe:
+        [self.tableView reloadData];
+    }];
+    ```
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/github-repo-list' title='Github Repo List'>Github Repo List</a> on Learn.co and start learning to code for free.</p>

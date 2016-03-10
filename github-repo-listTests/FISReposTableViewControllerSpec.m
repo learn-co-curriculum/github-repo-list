@@ -25,7 +25,7 @@ describe(@"FISReposTableViewController", ^{
         secondCell = [tester waitForCellAtIndexPath:ip inTableViewWithAccessibilityIdentifier:@"Repo Table View"];
     });
     
-    describe(@"TableVeiw", ^{
+    describe(@"TableView", ^{
         it(@"Should have 1 section", ^{
             expect([tableView numberOfSections]).to.equal(1);
         });
@@ -36,13 +36,8 @@ describe(@"FISReposTableViewController", ^{
     });
 
     describe(@"TableView Cells", ^{
-        it(@"Should have a textLabel", ^{
-            expect(secondCell.textLabel).toNot.beNil();
-        });
-        
         it(@"Should have the correct cells", ^{
             expect(secondCell.textLabel.text).to.equal(@"wycats/merb-core");
-
         });
     });
     

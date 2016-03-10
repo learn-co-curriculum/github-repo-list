@@ -10,7 +10,8 @@
 
 @implementation FISReposDataStore
 
-+ (instancetype)sharedDataStore {
++(instancetype)sharedDataStore
+{
     static FISReposDataStore *_sharedDataStore = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -19,15 +20,5 @@
     
     return _sharedDataStore;
 }
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _repositories=[NSMutableArray new];
-    }
-    return self;
-}
-
 
 @end

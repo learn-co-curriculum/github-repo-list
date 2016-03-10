@@ -9,7 +9,9 @@
 #import "FISReposTableViewController.h"
 
 @interface FISReposTableViewController ()
+
 @end
+
 
 @implementation FISReposTableViewController
 
@@ -18,18 +20,24 @@
     [super viewDidLoad];
 
     self.tableView.accessibilityIdentifier = @"Repo Table View";
-    self.tableView.accessibilityLabel=@"Repo Table View";
+    self.tableView.accessibilityLabel = @"Repo Table View";
 }
+
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 0;
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"basicCell" forIndexPath:indexPath];
     
